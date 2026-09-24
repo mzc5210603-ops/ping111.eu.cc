@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>转换码头 · 格式转换工具</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="dock-head">
+  <div class="head-mark">
+    <h1>转换<em>码头</em></h1>
+    <p class="head-sub">CONVERT&nbsp;DOCK&nbsp;&nbsp;·&nbsp;&nbsp;10&nbsp;个泊位&nbsp;&nbsp;·&nbsp;&nbsp;数据不出本机&nbsp;&nbsp;·&nbsp;&nbsp;即装即运</p>
+  </div>
+  <div class="stamp">累计转运<br><b id="statNum">0</b>&nbsp;件</div>
+</header>
+
+<nav class="berth-rail" id="berthRail" aria-label="转换泊位"></nav>
+
+<main class="yard">
+  <div class="opts-strip" id="optsStrip"></div>
+
+  <section class="panes">
+    <div class="pane pane-in">
+      <div class="pane-head">
+        <span class="pane-tag tag-in">进货区</span>
+        <span class="pane-meta" id="inMeta">等待装货</span>
+      </div>
+      <textarea id="inText" class="cargo-text" spellcheck="false"
+        placeholder="把内容卸在这里……"></textarea>
+      <div id="dropZone" class="drop-zone" hidden>
+        <div class="dz-core">
+          <div class="dz-big">投放图片</div>
+          <div class="dz-sub">拖进来 或 点击选择<br>JPG · PNG · WebP · GIF</div>
+        </div>
+        <input type="file" id="fileInput" accept="image/*" hidden>
+        <img id="srcPreview" class="src-preview" alt="待转图片" hidden>
+      </div>
+    </div>
+
+    <div class="transfer-col">
+      <div class="transfer-note" id="transferNote">—</div>
+      <button class="go-btn" id="goBtn" title="执行转换">
+        <span class="go-arrow">→</span>
+        <span class="go-txt">起吊转运</span>
+      </button>
+      <div class="conveyor" aria-hidden="true"></div>
+    </div>
+
+    <div class="pane pane-out">
+      <div class="pane-head">
+        <span class="pane-tag tag-out">出货区</span>
+        <span class="pane-meta" id="outMeta">—</span>
+      </div>
+      <div class="out-stack">
+        <textarea id="outText" class="cargo-text" readonly spellcheck="false"
+          placeholder="按「起吊转运」后出货……"></textarea>
+        <img id="outPreview" class="out-preview" alt="转换结果" hidden>
+        <div id="outErr" class="err-stamp" hidden></div>
+      </div>
+      <div class="pane-actions">
+        <button class="act-btn" id="copyBtn">复制</button>
+        <button class="act-btn" id="dlBtn">下载</button>
+        <button class="act-btn ghost" id="clearBtn">清空</button>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div class="toast" id="toast"></div>
+<div id="errSink" hidden></div>
+<script src="app.js"></script>
+</body>
+</html>

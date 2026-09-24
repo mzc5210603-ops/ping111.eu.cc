@@ -1,0 +1,227 @@
+/* ═══ 转换码头 —— 工业纸面 + 信号橙 · 货运装卸布局 ═══ */
+:root {
+  --paper: #f3f1ea;
+  --panel: #fbfaf6;
+  --ink: #191914;
+  --ink-2: #5c574b;
+  --steel: #8f897b;
+  --line: #d9d4c7;
+  --accent: #ff4f00;
+  --accent-dk: #b93700;
+  --mono: "Consolas", "Courier New", monospace;
+  --sans: "Microsoft YaHei", "Segoe UI", sans-serif;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+/* hidden 属性必须压得住 display，否则切换面板会失灵 */
+[hidden] { display: none !important; }
+body {
+  background: var(--paper);
+  background-image: repeating-linear-gradient(0deg, transparent 0 31px, rgba(25,25,20,.03) 31px 32px);
+  color: var(--ink);
+  font-family: var(--sans);
+  min-height: 100vh;
+}
+
+/* ── 门楣 ── */
+.dock-head {
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 24px;
+  padding: 36px 5% 20px;
+  border-bottom: 3px solid var(--ink);
+}
+.head-mark h1 {
+  font-size: clamp(34px, 4.6vw, 52px);
+  font-weight: 900; letter-spacing: 10px; line-height: 1;
+}
+.head-mark h1 em { font-style: normal; color: var(--accent); }
+.head-sub {
+  margin-top: 10px; font-family: var(--mono);
+  font-size: 11px; letter-spacing: 3px; color: var(--steel);
+}
+.stamp {
+  flex: none; border: 2px solid var(--accent); color: var(--accent-dk);
+  font-family: var(--mono); font-size: 11px; letter-spacing: 2px; line-height: 1.7;
+  text-align: center; padding: 8px 18px;
+  transform: rotate(3deg); background: rgba(255,79,0,.04);
+}
+.stamp b { font-size: 24px; color: var(--accent); }
+
+/* ── 泊位轨道 ── */
+.berth-rail {
+  display: flex; overflow-x: auto;
+  background: var(--panel); border-bottom: 1px solid var(--ink);
+  scrollbar-width: thin;
+}
+.berth {
+  flex: none; display: flex; align-items: center; gap: 8px;
+  padding: 13px 18px; background: none; border: none;
+  border-right: 1px solid var(--line); cursor: pointer;
+  font-family: var(--sans); font-size: 14px; color: var(--ink-2);
+  letter-spacing: 1px; white-space: nowrap;
+}
+.berth:hover { color: var(--ink); background: rgba(255,79,0,.05); }
+.berth .no {
+  font-family: var(--mono); font-size: 10px; color: var(--steel);
+  border: 1px solid var(--line); padding: 1px 5px;
+}
+.berth.on { background: var(--ink); color: var(--paper); }
+.berth.on .no { color: var(--accent); border-color: var(--accent); }
+
+/* ── 货场 ── */
+.yard { padding: 20px 5% 48px; }
+.opts-strip {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 18px;
+  padding: 12px 18px; border: 1px dashed var(--ink);
+  background: var(--panel); margin-bottom: 20px;
+}
+.opt-hint {
+  font-family: var(--mono); font-size: 11px; color: var(--steel);
+  letter-spacing: 1px; margin-right: auto;
+}
+.opt {
+  display: flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 12px; color: var(--ink-2); letter-spacing: 1px;
+}
+.opt select, .num-in {
+  font-family: var(--mono); font-size: 12px; padding: 5px 8px;
+  border: 1px solid var(--ink); background: var(--paper); color: var(--ink);
+}
+.num-in { width: 88px; }
+.opt input[type="range"] { width: 120px; accent-color: var(--accent); }
+.opt b { font-family: var(--mono); min-width: 26px; color: var(--accent-dk); }
+.pill {
+  font-family: var(--mono); font-size: 12px; padding: 5px 12px;
+  border: 1px solid var(--ink); cursor: pointer;
+  background: var(--paper); color: var(--ink-2); letter-spacing: 1px;
+}
+.pill:hover { border-color: var(--accent); color: var(--accent-dk); }
+.pill.on { background: var(--accent); border-color: var(--accent-dk); color: #fff; font-weight: 700; }
+
+/* ── 装卸双栏 ── */
+.panes {
+  display: grid; grid-template-columns: minmax(0,1fr) 150px minmax(0,1fr);
+  gap: 18px; align-items: stretch;
+}
+.pane {
+  display: flex; flex-direction: column;
+  border: 2px solid var(--ink); background: var(--panel);
+  min-height: 430px;
+  box-shadow: 6px 6px 0 rgba(25,25,20,.08);
+}
+.pane-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  padding: 10px 14px; border-bottom: 2px solid var(--ink);
+}
+.pane-tag { font-family: var(--mono); font-size: 11px; font-weight: 700; letter-spacing: 3px; }
+.tag-in { color: var(--accent); }
+.tag-out { color: var(--ink); }
+.pane-meta {
+  font-family: var(--mono); font-size: 11px; color: var(--steel);
+  letter-spacing: 1px; text-align: right;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.cargo-text {
+  flex: 1; width: 100%; border: none; outline: none; resize: none;
+  padding: 16px; font-family: var(--mono); font-size: 13px; line-height: 1.8;
+  background: transparent; color: var(--ink); min-height: 350px;
+}
+.cargo-text::placeholder { color: #b9b3a4; }
+.cargo-text[readonly] { background: rgba(25,25,20,.025); }
+.out-stack { flex: 1; display: flex; flex-direction: column; }
+.out-stack .cargo-text { flex: 1; }
+.out-preview {
+  display: block; margin: 16px auto;
+  max-width: calc(100% - 32px); max-height: 330px;
+  border: 1px solid var(--line);
+  background: repeating-conic-gradient(#eceae2 0 25%, #fbfaf6 0 50%) 0 0 / 18px 18px;
+}
+.err-stamp {
+  margin: 14px; padding: 14px 16px;
+  border: 2px solid var(--accent); color: var(--accent-dk);
+  font-family: var(--mono); font-size: 13px; line-height: 1.7;
+  background: rgba(255,79,0,.05); transform: rotate(-.6deg);
+}
+.pane-actions {
+  display: flex; gap: 10px; padding: 12px 14px;
+  border-top: 1px dashed var(--line);
+}
+.act-btn {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 3px;
+  padding: 7px 16px; background: var(--ink); color: var(--paper);
+  border: 1px solid var(--ink); cursor: pointer;
+}
+.act-btn:hover { background: var(--accent); border-color: var(--accent-dk); }
+.act-btn.ghost { background: transparent; color: var(--ink); }
+.act-btn.ghost:hover { color: var(--accent-dk); border-color: var(--accent); background: rgba(255,79,0,.05); }
+
+/* ── 中央转运柱 ── */
+.transfer-col {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 16px; padding: 8px 4px;
+}
+.transfer-note {
+  font-family: var(--mono); font-size: 10px; color: var(--steel);
+  letter-spacing: 3px; writing-mode: vertical-rl;
+}
+.go-btn {
+  width: 92px; height: 92px;
+  border: 2px solid var(--ink); background: var(--accent); color: #fff;
+  cursor: pointer; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 2px;
+  box-shadow: 5px 5px 0 var(--ink);
+  transition: transform .1s, box-shadow .1s, filter .1s;
+}
+.go-btn:hover { filter: brightness(1.06); }
+.go-btn:active { transform: translate(3px, 3px); box-shadow: 2px 2px 0 var(--ink); }
+.go-arrow { font-size: 30px; font-weight: 900; line-height: 1; }
+.go-txt { font-size: 12px; font-weight: 700; letter-spacing: 4px; }
+.conveyor {
+  width: 100%; height: 10px;
+  background: repeating-linear-gradient(90deg, var(--steel) 0 12px, transparent 12px 24px);
+  animation: belt .45s linear infinite; opacity: .45;
+}
+@keyframes belt { to { background-position: -24px 0; } }
+
+/* ── 图片投放区 ── */
+.drop-zone {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 18px;
+  margin: 14px; border: 2px dashed var(--steel); cursor: pointer;
+  text-align: center; min-height: 330px;
+  transition: border-color .15s, background .15s;
+}
+.drop-zone:hover, .drop-zone.hot { border-color: var(--accent); background: rgba(255,79,0,.05); }
+.drop-zone.loaded { justify-content: flex-start; overflow: auto; }
+.dz-big { font-size: 22px; font-weight: 900; letter-spacing: 6px; }
+.dz-sub {
+  font-family: var(--mono); font-size: 11px; color: var(--steel);
+  letter-spacing: 2px; line-height: 1.9;
+}
+.src-preview {
+  max-width: 100%; max-height: 320px;
+  border: 1px solid var(--line); background: #fff;
+}
+
+/* ── 提示 ── */
+.toast {
+  position: fixed; left: 50%; bottom: 26px;
+  transform: translateX(-50%) translateY(12px);
+  background: var(--ink); color: var(--paper);
+  font-family: var(--mono); font-size: 12px; letter-spacing: 2px;
+  padding: 9px 20px; border-left: 4px solid var(--accent);
+  opacity: 0; pointer-events: none; transition: all .22s;
+  white-space: nowrap;
+}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── 响应式 ── */
+@media (max-width: 980px) {
+  .panes { grid-template-columns: 1fr; }
+  .transfer-col { flex-direction: row; padding: 4px 0; }
+  .go-btn { width: 130px; height: 62px; flex-direction: row; gap: 10px; }
+  .go-arrow { font-size: 22px; }
+  .transfer-note { writing-mode: horizontal-tb; }
+  .conveyor { width: 55%; flex: 1; }
+  .pane { min-height: 300px; }
+  .cargo-text { min-height: 220px; }
+  .dock-head { flex-direction: column; align-items: flex-start; gap: 14px; }
+}
